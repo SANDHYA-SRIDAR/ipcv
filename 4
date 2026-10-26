@@ -1,0 +1,39 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from google.colab.patches import cv2_imshow
+
+images = [(f"4-{i}.jpg", 5*i+5) for i in range(1, 11)]
+distances, percentages = [], []
+
+for file, d in images:
+    img = cv2.imread(file)
+    if img is None:
+        print("Cannot read:", file)
+        continue
+
+    gray = cv2.GaussianBlur(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), (9, 9), 2)
+
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 50, param1=100, param2=30, minRadius=10, maxRadius=500)
+
+    if circles is None:
+        print("Coin not detected:", file)
+        continue
+
+    x, y, r = np.round(circles[0]).astype(int)[0]
+    h, w = gray.shape
+    percentage = (np.pi * r**2 / (w * h)) * 100
+
+    distances.append(d)
+    percentages.append(percentage)
+
+    cv2.circle(img, (x, y), r, (0, 255, 0), 3)
+    print(f"{file}: Distance={d} cm, Area={percentage:.2f}%")
+    cv2_imshow(img)
+
+plt.plot(distances, percentages, 'o-')
+plt.xlabel("Distance (cm)")
+plt.ylabel("Percentage Area (%)")
+plt.title("Distance vs Coin Area")
+plt.grid()
+plt.show()

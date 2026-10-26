@@ -1,0 +1,33 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = cv2.imread(r"C:\Users\srida\Downloads\ChatGPT Image Oct 11, 2026, 01_17_46 AM.png", 0)
+if img is None:
+    raise FileNotFoundError("Image not found")
+
+r = np.random.randint(2, img.shape[0]-2)
+c = np.random.randint(2, img.shape[1]-2)
+
+print("Image shape:", img.shape)
+print("Pixel position:", r, c)
+print("Pixel value:", img[r, c])
+
+n8 = img[r-1:r+2, c-1:c+2]
+n16 = img[r-2:r+3, c-2:c+3]
+
+print("8-Neighbourhood:\n", n8)
+print("16-Neighbourhood:\n", n16)
+
+
+for i, (im, title) in enumerate([
+    (img, "Original Image"),
+    (n8, "8-Neighbourhood"),
+    (n16, "16-Neighbourhood")
+]):
+    plt.subplot(1, 3, i+1)
+    plt.imshow(im, cmap="gray")
+    plt.title(title)
+    plt.axis("off")
+
+plt.show()

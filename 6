@@ -1,0 +1,28 @@
+import cv2
+import matplotlib.pyplot as plt
+
+image_path = "q6-ref.png"
+
+image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+
+if image is None:
+    raise FileNotFoundError("Image not found. Check the image path.")
+
+negative_image = 255 - image
+
+cv2.imwrite("square_negative.jpg", negative_image)
+
+plt.figure(figsize=(10, 4))
+
+plt.subplot(1, 2, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Square Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(negative_image, cmap="gray")
+plt.title("Negative Image")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()

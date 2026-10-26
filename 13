@@ -1,0 +1,41 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+images = ["ronaldo.png", "messi.png"]
+
+for file in images:
+    img = cv2.imread(file, 0)
+    if img is None:
+        print("Image not found:", file)
+        continue
+
+    eq = cv2.equalizeHist(img)
+
+    print(file, "Mean:", np.mean(img), "Std:", np.std(img))
+    print("Equalized Mean:", np.mean(eq), "Std:", np.std(eq))
+
+    plt.figure(figsize=(10, 6))
+
+    plt.subplot(2, 2, 1)
+    plt.imshow(img, cmap="gray")
+    plt.title("Original")
+    plt.axis("off")
+
+    plt.subplot(2, 2, 2)
+    plt.hist(img.ravel(), 256, [0, 256])
+    plt.title("Original Histogram")
+
+    plt.subplot(2, 2, 3)
+    plt.imshow(eq, cmap="gray")
+    plt.title("Equalized")
+    plt.axis("off")
+
+    plt.subplot(2, 2, 4)
+    plt.hist(eq.ravel(), 256, [0, 256])
+    plt.title("Equalized Histogram")
+
+    plt.tight_layout()
+    plt.show()
+
+    cv2.imwrite("equalized_" + file, eq)

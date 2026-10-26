@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+target = np.array([
+    [1, 0, 1],
+    [0, 1, 0],
+    [1, 1, 1]
+])
+
+count = 0
+
+while True:
+    image = np.random.randint(0, 2, (3, 3))
+    count += 1
+
+    if np.array_equal(image, target):
+        plt.imshow(image, cmap='gray', interpolation='nearest')
+        plt.title(f"Sensible Image Found after {count} attempts")
+        plt.axis('off')
+        plt.show()
+
+        print("Matrix:")
+        print(image)
+        print(f"Found after {count} attempts.")
+        break

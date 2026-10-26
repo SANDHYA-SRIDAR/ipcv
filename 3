@@ -1,0 +1,66 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 5x5 binary representations of Tamil characters
+# 1 -> Filled pixel
+# 0 -> Empty pixel
+
+tamil_chars = {
+    "a": [
+        [0,1,1,0,1],
+        [1,0,1,0,1],
+        [0,1,1,1,1],
+        [1,0,1,0,1],
+        [0,1,1,0,1]
+    ],
+
+    "pa": [
+        [0,0,0,0,0],
+        [0,1,0,1,0],
+        [0,1,0,1,0],
+        [0,1,1,1,0],
+        [0,0,0,0,0]
+    ],
+
+    "Ta": [
+        [0,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,1,1,1,1]
+    ],
+
+    "ma": [
+        [0,0,0,0,0],
+        [1,0,1,1,1],
+        [1,0,1,0,1],
+        [1,0,1,0,1],
+        [1,1,1,1,1]
+    ],
+
+    "ra": [
+        [1,1,1,1,1],
+        [1,0,0,1,0],
+        [1,0,0,1,0],
+        [0,0,1,0,0],
+        [0,1,0,0,0]
+    ]
+}
+
+# Print matrices
+for char, matrix in tamil_chars.items():
+    print(f"\nCharacter: {char}")
+    for row in matrix:
+        print(row)
+
+# Display the matrices
+fig, axes = plt.subplots(1, 5, figsize=(10, 2.5))
+
+for ax, (char, matrix) in zip(axes, tamil_chars.items()):
+    ax.imshow(np.array(matrix), cmap='binary')
+    ax.set_title(char, fontsize=16)
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+plt.tight_layout()
+plt.show()

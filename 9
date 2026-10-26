@@ -1,0 +1,29 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = np.zeros((600, 600), dtype=np.uint8)
+
+for y in range(70, 531, 115):
+    for x in range(70, 531, 115):
+        cv2.circle(img, (x, y), 25, 255, -1)
+
+kernel = np.array([[-1,-1,-1],
+                   [-1, 8,-1],
+                   [-1,-1,-1]], dtype=np.float32)
+
+output = cv2.filter2D(img, cv2.CV_32F, kernel)
+output = cv2.normalize(np.abs(output), None, 0, 255,
+                       cv2.NORM_MINMAX).astype(np.uint8)
+
+plt.subplot(1, 2, 1)
+plt.imshow(img, cmap="gray")
+plt.title("Original Circles")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(output, cmap="gray")
+plt.title("Convolution Output")
+plt.axis("off")
+
+plt.show()

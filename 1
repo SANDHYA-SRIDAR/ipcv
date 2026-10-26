@@ -1,0 +1,22 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from itertools import product
+
+# Image dimensions
+rows, cols = 2, 3
+
+# Generate all possible binary images
+all_images = list(product([0, 1], repeat=rows * cols))
+
+print(f"Total possible images: {len(all_images)}")
+
+# Display all images
+fig, axes = plt.subplots(8, 8, figsize=(8, 8))
+
+for ax, img in zip(axes.flat, all_images):
+    image = np.array(img).reshape(rows, cols)
+    ax.imshow(image, cmap='gray', vmin=0, vmax=1)
+    ax.axis('off')
+
+plt.tight_layout()
+plt.show()
